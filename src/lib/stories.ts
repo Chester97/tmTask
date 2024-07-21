@@ -1,30 +1,51 @@
-export const getStoriesIds = async (limit: number) => {
+import type { Story } from '@/models/story';
+
+export const getStoriesIds = async (
+  page: number,
+  limit: number
+): Promise<string[] | undefined> => {
   try {
     const response = await fetch(
       'https://hacker-news.firebaseio.com/v0/topstories.json'
     );
     const storiesData = await response.json();
-    return storiesData.slice(0, limit);
+
+    const start = (page - 1) * limit;
+    const end = start + limit;
+
+    return storiesData.slice(start, end);
   } catch (error) {
     console.error(error);
   }
 };
 
-export const getStoryItem = async (id: string) => {
+export const getStoryItem = async (id: string): Promise<Story> => {
   try {
     const response = await fetch(
       `https://hacker-news.firebaseio.com/v0/item/${id}.json`
     );
-    return response.json();
+
+    const data = await response.json();
+
+    return data;
   } catch (error) {
-    console.error(error);
+    throw new Error('Something went wrong while fetching the story!');
   }
 };
 
-export const getStories = async (limit = 30) => {
-  const ids = await getStoriesIds(limit);
+export const getStories = async (page: number, limit: number) => {
+  const ids = await getStoriesIds(page, limit);
+  if (!ids) return [];
   const stories = await Promise.all(
     ids.map((id) => getStoryItem(id))
   );
   return stories;
+};
+
+export const getComments = async (ids: string[]) => {
+  if (ids.length < 1) return [];
+  const comments = await Promise.all(
+    ids.map((id) => getStoryItem(id))
+  );
+  return comments;
 };

@@ -1,0 +1,35 @@
+.storiesCommentsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.storyCommentsTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 32px 0;
+}
+
+.storyCommentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.storyCommentAuthor {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.storyCommentContent {
+  font-size: 14px;
+}
+
+.storyCommentTime {
+  font-size: 12px;
+  margin-top: 4px;
+}

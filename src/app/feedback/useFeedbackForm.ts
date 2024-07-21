@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 type FeedbackFormFields = {
@@ -7,10 +7,17 @@ type FeedbackFormFields = {
   feedback: string;
 };
 
+type FormSubmitMessage = {
+  type: 'success' | 'error';
+  message: string;
+};
+
 export const useFeedbackForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
+    watch,
     formState: { errors },
   } = useForm<FeedbackFormFields>({
     mode: 'onSubmit',
@@ -20,7 +27,23 @@ export const useFeedbackForm = () => {
       feedback: '',
     },
   });
-  const [formSubmitMessage, setFormSubmitMessage] = useState('');
+  const [formSubmitMessage, setFormSubmitMessage] =
+    useState<FormSubmitMessage | null>(null);
+
+  const [isSafeToReset, setIsSafeToReset] = useState(false);
+
+  useEffect(() => {
+    reset();
+  }, [reset, isSafeToReset]);
+
+  useEffect(() => {
+    const subscription = watch(() => {
+      if (formSubmitMessage) {
+        setFormSubmitMessage(null);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, formSubmitMessage]);
 
   const onSubmit = async (data: FeedbackFormFields) => {
     try {
@@ -32,12 +55,23 @@ export const useFeedbackForm = () => {
         body: JSON.stringify(data),
       });
       if (response.ok) {
-        setFormSubmitMessage('Feedback submitted successfully');
+        setFormSubmitMessage({
+          type: 'success',
+          message: 'Feedback submitted successfully',
+        });
       } else {
-        setFormSubmitMessage('Failed to submit feedback');
+        setFormSubmitMessage({
+          type: 'error',
+          message: 'Error submitting feedback',
+        });
       }
     } catch (error) {
-      setFormSubmitMessage('Error submitting feedback');
+      setFormSubmitMessage({
+        type: 'error',
+        message: 'Error submitting feedback',
+      });
+    } finally {
+      setIsSafeToReset(!isSafeToReset);
     }
   };
 

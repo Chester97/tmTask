@@ -39,7 +39,7 @@ export default function FeedbackPage() {
         />
         <button type="submit">Submit</button>
       </form>
-      {formSubmitMessage && <p>{formSubmitMessage}</p>}
+      {formSubmitMessage && <p>{formSubmitMessage.message}</p>}
     </div>
   );
 }

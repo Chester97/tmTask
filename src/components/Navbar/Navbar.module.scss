@@ -1,0 +1,44 @@
+.navbarWrapper {
+  width: 100%;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.logoWrapper {
+  background-color: #000;
+  border-radius: 4px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+}
+
+.navbarLinksWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 32px;
+  width: 100%;
+}
+
+.navbarLinkElement {
+  cursor: pointer;
+  color: #c6c6c6;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+
+  &__active {
+    color: #000;
+  }
+
+  &:hover {
+    color: #000;
+  }
+}
