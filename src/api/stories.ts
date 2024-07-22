@@ -36,16 +36,25 @@ export const getStoryItem = async (id: string): Promise<Story> => {
 export const getStories = async (page: number, limit: number) => {
   const ids = await getStoriesIds(page, limit);
   if (!ids) return [];
-  const stories = await Promise.all(
-    ids.map((id) => getStoryItem(id))
-  );
-  return stories;
+  try {
+    const stories = await Promise.all(
+      ids.map((id) => getStoryItem(id))
+    );
+    return stories;
+  } catch (error) {
+    throw new Error('Something went wrong while fetching the story!'); // Normally I would inform user via toast or something similar
+  }
 };
 
 export const getComments = async (ids: string[]) => {
   if (ids.length < 1) return [];
-  const comments = await Promise.all(
-    ids.map((id) => getStoryItem(id))
-  );
-  return comments;
+
+  try {
+    const comments = await Promise.all(
+      ids.map((id) => getStoryItem(id))
+    );
+    return comments;
+  } catch (error) {
+    throw new Error('Something went wrong while fetching the story!'); // Normally I would inform user via toast or something similar
+  }
 };

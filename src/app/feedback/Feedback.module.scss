@@ -1,0 +1,25 @@
+.feedbackWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.feedbackTitle {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.feedbackFormContainer {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  padding: 32px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

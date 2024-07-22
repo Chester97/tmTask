@@ -1,11 +1,11 @@
-import { getComments } from '@/lib/stories';
 import DOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 
-import styles from './StoryComments.module.scss';
-
 import type { Story } from '@/models/story';
-import { formatDistanceToNow } from 'date-fns';
+import { getComments } from '@/api/stories';
+import { AddedTimeAgo } from '@/components/AddedTimeAgo/AddedTimeAgo';
+
+import styles from './StoryComments.module.scss';
 
 type CommentIds = {
   commentIds: Story['kids'] | undefined;
@@ -36,9 +36,10 @@ const StoryComments = async ({ commentIds = [] }: CommentIds) => {
                 <p className={styles.storyCommentAuthor}>
                   {comment.by}
                 </p>
-                <p className={styles.storyCommentTime}>
-                  {formatDistanceToNow(Date.now() - comment.time)} ago
-                </p>
+                <AddedTimeAgo
+                  time={comment.time}
+                  className={styles.storyCommentTime}
+                />
               </div>
               {comment.text && (
                 <div

@@ -1,0 +1,17 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.labelElement {
+  font-size: 14px;
+}
+
+.inputElement {
+  padding: 8px
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: red;
+}

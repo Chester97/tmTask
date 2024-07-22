@@ -1,22 +1,23 @@
 import Link from 'next/link';
-import styles from './page.module.scss';
 import cx from 'classnames';
-import { formatDistanceToNow } from 'date-fns';
 
-import { getStories } from '@/lib/stories';
+import { getStories } from '@/api/stories';
+import { AddedTimeAgo } from '@/components/AddedTimeAgo/AddedTimeAgo';
+
+import styles from './HomePage.module.scss';
 
 type SearchParams = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-const limit = 25;
+const paginationLimit = 25;
 
 const Home = async ({ searchParams }: SearchParams) => {
   const pageParam = searchParams.page;
   const page = Array.isArray(pageParam)
     ? parseInt(pageParam[0])
     : parseInt(pageParam || '1');
-  const stories = await getStories(page, limit);
+  const stories = await getStories(page, paginationLimit);
 
   return (
     <div className={styles.storiesWrapper}>
@@ -25,9 +26,6 @@ const Home = async ({ searchParams }: SearchParams) => {
       </h1>
       <div className={styles.storiesContainer}>
         {stories.map((story) => {
-          const timeAgo = formatDistanceToNow(
-            Date.now() - story.time
-          );
           return (
             <Link
               key={story.id}
@@ -39,7 +37,7 @@ const Home = async ({ searchParams }: SearchParams) => {
                 <p className={styles.storyAuthor}>{story.by}</p>
               </div>
               <div className={styles.storyItemDetails}>
-                <p>Added {timeAgo} ago</p>
+                <AddedTimeAgo time={story.time} />
                 <div>Read More</div>
               </div>
             </Link>

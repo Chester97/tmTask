@@ -1,17 +1,16 @@
-import { getStoryItem } from '@/lib/stories';
-import StoryComments from './StoryComments';
 import { Suspense } from 'react';
 
-import styles from './Story.module.scss';
-import { formatDistanceToNow } from 'date-fns';
-import Loading from './loading';
 import { StorySkeleton } from '@/components/StorySkeleton/StorySkeleton';
+import { AddedTimeAgo } from '@/components/AddedTimeAgo/AddedTimeAgo';
+import { getStoryItem } from '@/api/stories';
+
+import StoryComments from './StoryComments';
+import styles from './Story.module.scss';
 
 type StoryProps = { params: { storyId: string } };
 
 const Story = async ({ params: { storyId } }: StoryProps) => {
   const story = await getStoryItem(storyId);
-  const timeAgo = formatDistanceToNow(Date.now() - story.time);
 
   return (
     <div>
@@ -19,7 +18,7 @@ const Story = async ({ params: { storyId } }: StoryProps) => {
         <h1 className={styles.storyDetailedTitle}>{story.title}</h1>
         <h3>Author: {story.by}</h3>
         <p>Score: {story.score}</p>
-        <p>Added: {timeAgo} ago</p>
+        <AddedTimeAgo time={story.time} />
         {story.url && (
           <a
             rel="noopener noreferrer"

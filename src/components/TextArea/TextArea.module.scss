@@ -1,0 +1,18 @@
+.textAreaWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.labelElement {
+  font-size: 14px;
+}
+
+.textAreaElement {
+  resize: none;
+  height: 300px;
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: red;
+}

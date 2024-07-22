@@ -1,5 +1,7 @@
 import { ForwardedRef, forwardRef } from 'react';
 
+import styles from './Input.module.scss';
+
 type Props = {
   label: string;
   id: string;
@@ -14,10 +16,20 @@ export const Input = forwardRef(
     const { label, id, type = 'text', errorMessage, ...rest } = props;
 
     return (
-      <div>
-        <label htmlFor={id}>{label}</label>
-        <input id={id} ref={ref} type={type} {...rest} />
-        {errorMessage && <p>{errorMessage}</p>}
+      <div className={styles.inputWrapper}>
+        <label htmlFor={id} className={styles.labelElement}>
+          {label}
+        </label>
+        <input
+          className={styles.inputElement}
+          id={id}
+          ref={ref}
+          type={type}
+          {...rest}
+        />
+        {errorMessage && (
+          <p className={styles.errorMessage}>{errorMessage}</p>
+        )}
       </div>
     );
   }

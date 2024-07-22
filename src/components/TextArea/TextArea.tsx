@@ -1,5 +1,7 @@
 import { ForwardedRef, forwardRef } from 'react';
 
+import styles from './TextArea.module.scss';
+
 type Props = {
   label: string;
   id: string;
@@ -14,10 +16,19 @@ export const TextArea = forwardRef(
     const { label, id, errorMessage, ...rest } = props;
 
     return (
-      <div>
-        <label htmlFor={id}>{label}</label>
-        <textarea id={id} ref={ref} {...rest} />
-        {errorMessage && <p>{errorMessage}</p>}
+      <div className={styles.textAreaWrapper}>
+        <label className={styles.labelElement} htmlFor={id}>
+          {label}
+        </label>
+        <textarea
+          className={styles.textAreaElement}
+          id={id}
+          ref={ref}
+          {...rest}
+        />
+        {errorMessage && (
+          <p className={styles.errorMessage}>{errorMessage}</p>
+        )}
       </div>
     );
   }

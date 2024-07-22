@@ -1,12 +1,12 @@
 'use client';
 
 import cx from 'classnames';
-
-import styles from './Navbar.module.scss';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export const Navbar = (props) => {
+import styles from './Navbar.module.scss';
+
+export const Navbar = () => {
   const pathname = usePathname();
 
   return (
