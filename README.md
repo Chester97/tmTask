@@ -1,3 +1,10 @@
+## Contributing
+
+- Node version >= 20
+
+1.  npm install
+2.  npm run dev
+
 ## Getting Started
 
 First, run the development server:
